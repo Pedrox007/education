@@ -1,5 +1,6 @@
 package com.labcomu.orcid;
 
+import com.labcomu.faultinjection.annotation.Throw;
 import com.labcomu.orcid.resource.Researcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;

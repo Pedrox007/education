@@ -12,6 +12,13 @@ management:
     info:
       enabled: true
 
+resilience4j:
+  retry:
+    instances:
+      orcIdSearch:
+        maxRetryAttempts: 3
+        waitDuration: 2s
+
 spring:
   application:
     name: edu-service
