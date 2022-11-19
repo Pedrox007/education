@@ -19,6 +19,12 @@ resilience4j:
         maxRetryAttempts: 3
         waitDuration: 2s
 
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
 spring:
   application:
     name: edu-service

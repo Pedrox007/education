@@ -12,6 +12,12 @@ management:
     info:
       enabled: true
 
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
 spring:
   application:
     name: orcid-service
