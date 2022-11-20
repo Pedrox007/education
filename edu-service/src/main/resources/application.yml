@@ -29,6 +29,12 @@ resilience4j:
           permittedNumberOfCallsInHalfOpenState: 3
 
 
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
 spring:
   application:
     name: edu-service
