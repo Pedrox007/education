@@ -23,15 +23,15 @@ public class EduController {
 
   private final Logger logger = LoggerFactory.getLogger(EduController.class);
 
+  @CircuitBreaker(name = "orgCB", fallbackMethod = "fallbackMethod")
   @Retry(name = "orcIdSearch")
-  @CircuitBreaker(name = "orgCB", fallbackMethod = "fallback")
   @GetMapping("organization/{url}")
   public Organization getOrganization(@NotNull @PathVariable String url) {
     return service.getOrganization(url);
   }
 
-  public int fallback(Throwable e){
-    logger.info("Erro na requisição: " + e);
+  public int fallbackMethod(Throwable e){
+    logger.info("Erro na requisição");
     return 0;
   }
 
