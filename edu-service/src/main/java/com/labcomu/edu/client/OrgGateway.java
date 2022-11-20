@@ -2,10 +2,14 @@ package com.labcomu.edu.client;
 
 import com.labcomu.edu.configuration.EduProperties;
 import com.labcomu.edu.resource.Organization;
+import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
 
 import javax.validation.constraints.NotNull;
 
@@ -16,8 +20,9 @@ public class OrgGateway {
 
     private final WebClient.Builder webClientBuilder;
 
+
     public OrgGateway(final WebClient.Builder webClientBuilder,
-            final EduProperties properties) {
+                      final EduProperties properties) {
         this.webClientBuilder = webClientBuilder;
         this.fetchOrganizationUrl = properties.getUrl().getFetchOrganizationDetails();
     }

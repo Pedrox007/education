@@ -13,4 +13,5 @@ do_docker() {
   docker compose --file docker-compose.yml up --detach
 }
 
+# shellcheck disable=SC2068
 . ./do.sh Start $@

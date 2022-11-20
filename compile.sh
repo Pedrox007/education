@@ -10,4 +10,5 @@ do_docker() {
   ./compile_docker_stop.sh
 }
 
+# shellcheck disable=SC2068
 . ./do.sh Compile $@

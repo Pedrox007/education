@@ -18,6 +18,16 @@ resilience4j:
       orcIdSearch:
         maxRetryAttempts: 3
         waitDuration: 2s
+  circuitbreaker:
+    instances:
+      orgCB:
+          failureRateThreshold: 50
+          minimumNumberOfCalls: 5
+          slidingWindowType: TIME_BASED
+          slidingWindowSize: 10
+          waitDurationInOpenState: 50s
+          permittedNumberOfCallsInHalfOpenState: 3
+
 
 spring:
   application:

@@ -17,4 +17,5 @@ do_docker() {
   docker compose down --rmi local
 }
 
+# shellcheck disable=SC2068
 . ./do.sh Start $@

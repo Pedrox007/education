@@ -9,4 +9,5 @@ public class Organization {
     private String name;
     private String url;
     private Collection<Researcher> researchers;
+
 }
