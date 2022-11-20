@@ -2,6 +2,7 @@ package com.labcomu.edu;
 
 import com.labcomu.edu.resource.Organization;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,15 +24,21 @@ public class EduController {
 
   private final Logger logger = LoggerFactory.getLogger(EduController.class);
 
-  @CircuitBreaker(name = "orgCB", fallbackMethod = "fallbackMethod")
+  @CircuitBreaker(name = "orgCB", fallbackMethod = "circuitFallback")
+  @RateLimiter(name = "basic", fallbackMethod = "rateFallback")
   @Retry(name = "orcIdSearch")
   @GetMapping("organization/{url}")
   public Organization getOrganization(@NotNull @PathVariable String url) {
     return service.getOrganization(url);
   }
 
-  public int fallbackMethod(Throwable e){
-    logger.info("Erro na requisição");
+  public int circuitFallback(@NotNull @PathVariable String url, Throwable e){
+    logger.info("Erro na requisição, falha: " + e);
+    return 0;
+  }
+
+  public int rateFallback(@NotNull @PathVariable String url, Throwable e){
+    logger.info("Erro na requisição, falha: " + e);
     return 0;
   }
 
