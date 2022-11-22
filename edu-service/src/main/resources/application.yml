@@ -29,17 +29,10 @@ resilience4j:
           permittedNumberOfCallsInHalfOpenState: 3
   ratelimiter:
     instances:
-      basic:
+      orgRL:
         limitForPeriod: 2
         limitRefreshPeriod: 1s
         timeoutDuration: 3s
-
-
-logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
 
 spring:
   application:

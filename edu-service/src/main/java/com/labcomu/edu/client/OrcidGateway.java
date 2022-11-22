@@ -24,6 +24,7 @@ public class OrcidGateway {
 
     }
 
+    @Retry(name = "orcIdSearch")
     public Researcher getResearcher(@NotNull final String orcid) {
         return webClientBuilder.build()
                 .get()

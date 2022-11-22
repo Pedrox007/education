@@ -1,5 +1,6 @@
 package com.labcomu.edu.resource;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Collection;

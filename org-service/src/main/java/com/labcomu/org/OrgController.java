@@ -1,5 +1,6 @@
 package com.labcomu.org;
 
+import com.labcomu.faultinjection.annotation.Delay;
 import com.labcomu.org.resource.ResourceOrganization;
 import com.labcomu.org.resource.ResourceResearcher;
 import lombok.RequiredArgsConstructor;

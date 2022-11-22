@@ -1,17 +1,23 @@
 package com.labcomu.edu;
 
 import com.labcomu.edu.resource.Organization;
+import com.labcomu.faultinjection.annotation.Delay;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
 
@@ -24,22 +30,14 @@ public class EduController {
 
   private final Logger logger = LoggerFactory.getLogger(EduController.class);
 
-  @CircuitBreaker(name = "orgCB", fallbackMethod = "circuitFallback")
-  @RateLimiter(name = "basic", fallbackMethod = "rateFallback")
-  @Retry(name = "orcIdSearch")
+  @RateLimiter(name = "orgRL", fallbackMethod = "rateFallback")
   @GetMapping("organization/{url}")
-  public Organization getOrganization(@NotNull @PathVariable String url) {
-    return service.getOrganization(url);
+  public ResponseEntity<Organization> getOrganization(@NotNull @PathVariable String url) {
+    return new ResponseEntity<>(service.getOrganization(url), HttpStatus.OK);
   }
 
-  public int circuitFallback(@NotNull @PathVariable String url, Throwable e){
-    logger.info("Erro na requisição, falha: " + e);
-    return 0;
+  public ResponseEntity<Object> rateFallback(String url, RequestNotPermitted rnp){
+    logger.info("Erro na requisição, falha: " + rnp.getMessage());
+    return new ResponseEntity<>("Error" ,HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
-  public int rateFallback(@NotNull @PathVariable String url, Throwable e){
-    logger.info("Erro na requisição, falha: " + e);
-    return 0;
-  }
-
 }
